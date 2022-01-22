@@ -3,31 +3,26 @@ version: '3.7'
 services:
   database:
     image: mysql:5.7
-    restart: always
+    container_name: database
     environment:
-      MYSQL_ROOT_PASSWORD: N1234n
-      MYSQL_DATABASE: bookstore_db
+      MYSQL_ROOT_PASSWORD: T123456t
       MYSQL_USER: admin
       MYSQL_PASSWORD: tomas8199
+      MYSQL_DATABASE: bookstore_db
     networks:
       - apinet
-    volumes:
-     volumes:
-      - /home/ec2-user/mydata:/var/lib/mysql
-      # - db_data:/var/lib/mysql
   
-  myapi:
-    build: .
+  myapp:
+    image: nec2005/bookstoreapi:latest
+    container_name: myapp
     restart: always
-    depends_on:
-      - database
+    depends_on: 
+    - database
     ports:
       - "80:80"
     networks:
       - apinet
+
 networks:
   apinet:
-    driver: bridge
 
-# volumes:
-#   db_data:
